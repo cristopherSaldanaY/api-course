@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
-public class InstitutionEntity {
+public class Institution {
 
     @Min(value = 1, message = "El id de Institución es obligatorio")
     private int id;
@@ -13,11 +13,11 @@ public class InstitutionEntity {
     @NotEmpty(message = "El nombre de Institucion es obligatorio")
     private String name;
 
-    public InstitutionEntity(){
+    public Institution(){
 
     }
 
-    public InstitutionEntity(int id, String name){
+    public Institution(int id, String name){
         this.id = id;
         this.name = name;
     }
@@ -51,7 +51,7 @@ public class InstitutionEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        InstitutionEntity that = (InstitutionEntity) o;
+        Institution that = (Institution) o;
         return id == that.id;
     }
 

@@ -6,19 +6,19 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
-public class CourseEntity  {
+public class Course {
 
     @Min(value = 1, message = "El id del curso es obligatorio")
     private int id;
     @NotEmpty(message = "El nombre del curso no puede estar vacío")
     private String name;
 
-    @Valid //valida por que es una clase
-    private InstitutionEntity institution;
+    @Valid
+    private Institution institution;
 
-    public CourseEntity(){}
+    public Course(){}
 
-    public CourseEntity(int id, String name, InstitutionEntity institution){
+    public Course(int id, String name, Institution institution){
         this.id = id;
         this.name = name;
         this.institution = institution;
@@ -40,11 +40,11 @@ public class CourseEntity  {
         this.name = name;
     }
 
-    public InstitutionEntity getInstitution() {
+    public Institution getInstitution() {
         return institution;
     }
 
-    public void setInstitution(InstitutionEntity institution) {
+    public void setInstitution(Institution institution) {
         this.institution = institution;
     }
 
@@ -62,7 +62,7 @@ public class CourseEntity  {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CourseEntity that = (CourseEntity) o;
+        Course that = (Course) o;
         return id == that.id;
     }
 
