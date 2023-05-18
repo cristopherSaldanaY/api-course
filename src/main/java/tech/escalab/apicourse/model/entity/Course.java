@@ -1,25 +1,29 @@
-package tech.escalab.apicourse.entity;
+package tech.escalab.apicourse.model.entity;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import org.springframework.hateoas.RepresentationModel;
+
 
 import java.util.Objects;
 
-public class Institution {
+public class Course extends RepresentationModel<Course> {
 
-    @Min(value = 1, message = "El id de Institución es obligatorio")
+    @Min(value = 1, message = "El id del curso es obligatorio")
     private int id;
-
-    @NotEmpty(message = "El nombre de Institucion es obligatorio")
+    @NotEmpty(message = "El nombre del curso no puede estar vacío")
     private String name;
 
-    public Institution(){
+    @Valid
+    private Institution institution;
 
-    }
+    public Course(){}
 
-    public Institution(int id, String name){
+    public Course(int id, String name, Institution institution){
         this.id = id;
         this.name = name;
+        this.institution = institution;
     }
 
     public int getId() {
@@ -38,11 +42,20 @@ public class Institution {
         this.name = name;
     }
 
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("InstitutionEntity{");
+        final StringBuilder sb = new StringBuilder("CourseEntity{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
+        sb.append(", institution='").append(institution).append('\'');
         sb.append('}');
         return sb.toString();
     }
@@ -51,7 +64,7 @@ public class Institution {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Institution that = (Institution) o;
+        Course that = (Course) o;
         return id == that.id;
     }
 

@@ -1,4 +1,4 @@
-package tech.escalab.apicourse.exception;
+package tech.escalab.apicourse.common.exception;
 
 import org.springframework.validation.FieldError;
 

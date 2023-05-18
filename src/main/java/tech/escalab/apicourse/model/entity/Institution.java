@@ -1,27 +1,25 @@
-package tech.escalab.apicourse.entity;
+package tech.escalab.apicourse.model.entity;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
-public class Course {
+public class Institution {
 
-    @Min(value = 1, message = "El id del curso es obligatorio")
+    @Min(value = 1, message = "El id de Institución es obligatorio")
     private int id;
-    @NotEmpty(message = "El nombre del curso no puede estar vacío")
+
+    @NotEmpty(message = "El nombre de Institucion es obligatorio")
     private String name;
 
-    @Valid
-    private Institution institution;
+    public Institution(){
 
-    public Course(){}
+    }
 
-    public Course(int id, String name, Institution institution){
+    public Institution(int id, String name){
         this.id = id;
         this.name = name;
-        this.institution = institution;
     }
 
     public int getId() {
@@ -40,20 +38,11 @@ public class Course {
         this.name = name;
     }
 
-    public Institution getInstitution() {
-        return institution;
-    }
-
-    public void setInstitution(Institution institution) {
-        this.institution = institution;
-    }
-
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("CourseEntity{");
+        final StringBuilder sb = new StringBuilder("InstitutionEntity{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
-        sb.append(", institution='").append(institution).append('\'');
         sb.append('}');
         return sb.toString();
     }
@@ -62,7 +51,7 @@ public class Course {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Course that = (Course) o;
+        Institution that = (Institution) o;
         return id == that.id;
     }
 
