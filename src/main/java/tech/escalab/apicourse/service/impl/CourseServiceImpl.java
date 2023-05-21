@@ -34,49 +34,29 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public Course getCourse(int id) {
-        List<Course> courses = courseRepository.getCourses();
-
-        for (Course course: courses) {
-            if (course.getId() == id){
-                return course;
-            }
-        }
-        return null;
+        Course course = courseRepository.getCourse(id);
+        return course;
     }
 
     @Override
     public Course insertCourse(Course course) {
-        List<Course> courses = courseRepository.getCourses();
 
+        courseRepository.insertCourse(course);
         course.add(linkTo(methodOn(CourseController.class).getCourse(course.getId())).withSelfRel());
         course.add(linkTo(methodOn(CourseController.class).getCourses()).withRel(IanaLinkRelations.COLLECTION));
 
-        courses.add(course);
         return course;
     }
 
     @Override
     public Course updateCourse(int id, Course updateCourse) {
-        List<Course> courses = courseRepository.getCourses();
-        for (Course course : courses) {
-            if (course.getId() == id){
-                course.setName(updateCourse.getName());
-                course.setInstitution(updateCourse.getInstitution());
-                return course;
-            }
-        }
-        return null;
+        Course course = courseRepository.updateCourse(id, updateCourse);
+        return course;
     }
 
     @Override
     public Course deleteCourse(int id) {
-        List<Course> courses = courseRepository.getCourses();
-        for (Course course : courses) {
-            if(course.getId() == id){
-                courses.remove(course); // delete course
-                return course;
-            }
-        }
-        return null;
+        Course course = courseRepository.deleteCourse(id);
+        return course;
     }
 }

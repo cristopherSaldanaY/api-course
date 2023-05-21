@@ -58,49 +58,39 @@ public class CourseController {
     //Get one course
     @GetMapping("/{id}") //add the params {id}
     public ResponseEntity<Course> getCourse(@PathVariable("id") int id){ //@PathVariable for params
-        List<Course> courses = courseService.getCourses();
-
-        for (Course course: courses) {
-           if (course.getId() == id){
-               return new ResponseEntity<Course>(course, HttpStatus.OK);
-           }
+        Course course = courseService.getCourse(id);
+        if (course == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(course,HttpStatus.OK);
     }
 
     //create one course
     @PostMapping("/") //method http post
-    public ResponseEntity<Course> insertCourse (@Valid @RequestBody Course course){ //RequestBody to define structure
-        List<Course> courses = courseService.getCourses();
-
-        courses.add(course);
+    public ResponseEntity<Course> insertCourse (@Valid @RequestBody Course courseRequest){ //RequestBody to define structure
+        Course course = courseService.insertCourse(courseRequest);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
 
     //update one course
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable("id") int id, @RequestBody Course updateCourse){
-        List<Course> courses = courseService.getCourses();
-        for (Course course : courses) {
-            if (course.getId() == id){
-                course.setName(updateCourse.getName());
-                course.setInstitution(updateCourse.getInstitution());
-                return new ResponseEntity<>(course, HttpStatus.OK);
-            }
+    public ResponseEntity<Course> updateCourse(@PathVariable("id") int id, @RequestBody Course courseRequest){
+        Course course = courseService.updateCourse(id, courseRequest);
+
+        if(course == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Course> deleteCourse(@PathVariable("id") int id){
-        List<Course> courses = courseService.getCourses();
-        for (Course course : courses) {
-            if(course.getId() == id){
-                courses.remove(course); // delete course
-                return new ResponseEntity<>(course, HttpStatus.OK);
-            }
+        Course course = courseService.deleteCourse(id);
+
+        if (course == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 }

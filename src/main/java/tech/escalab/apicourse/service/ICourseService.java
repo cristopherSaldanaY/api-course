@@ -12,7 +12,7 @@ public interface ICourseService {
 
     Course insertCourse(Course course);
 
-    Course updateCourse(int id, Course updateCourse);
+    Course updateCourse(int id, Course course);
 
     Course deleteCourse(int id);
 }

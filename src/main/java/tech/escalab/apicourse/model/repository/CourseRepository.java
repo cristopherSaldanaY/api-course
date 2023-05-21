@@ -35,7 +35,6 @@ public class CourseRepository {
 
     public static Course insertCourse(Course course){
         courses.add(course);
-
         return course;
     }
 
