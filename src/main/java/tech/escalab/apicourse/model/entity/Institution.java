@@ -1,47 +1,37 @@
 package tech.escalab.apicourse.model.entity;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
+@Entity
+@Table(name = "institutions")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 public class Institution {
 
-    @Min(value = 1, message = "El id de Institución es obligatorio")
-    private int id;
+    /*@Min(value = 1, message = "El id de Institución es obligatorio") */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int institutionId;
 
-    @NotEmpty(message = "El nombre de Institucion es obligatorio")
+    /*@NotEmpty(message = "El nombre de Institucion es obligatorio") */
+    @Column(nullable = false, unique = true)
     private String name;
 
-    public Institution(){
-
-    }
-
-    public Institution(int id, String name){
-        this.id = id;
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("InstitutionEntity{");
-        sb.append("id=").append(id);
+        sb.append("id=").append(institutionId);
         sb.append(", name='").append(name).append('\'');
         sb.append('}');
         return sb.toString();
@@ -52,11 +42,11 @@ public class Institution {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Institution that = (Institution) o;
-        return id == that.id;
+        return institutionId == that.institutionId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(institutionId);
     }
 }

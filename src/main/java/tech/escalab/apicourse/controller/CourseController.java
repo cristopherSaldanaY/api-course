@@ -10,6 +10,7 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.escalab.apicourse.model.dto.CourseRequest;
 import tech.escalab.apicourse.model.entity.Course;
 import tech.escalab.apicourse.model.entity.Institution;
 import tech.escalab.apicourse.service.impl.CourseServiceImpl;
@@ -44,9 +45,9 @@ public class CourseController {
                     @Content(schema = @Schema())
             })
     })
-    public ResponseEntity<List<Course>> getCourses(){
+    public ResponseEntity<List<CourseRequest>> getCourses(){
 
-        List<Course> courses = courseService.getCourses();
+        List<CourseRequest> courses = courseService.getCourses();
 
         if (courses.size() > 0){
             return new ResponseEntity<>(courses, HttpStatus.OK);

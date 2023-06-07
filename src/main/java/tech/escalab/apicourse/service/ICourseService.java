@@ -1,12 +1,13 @@
 package tech.escalab.apicourse.service;
 
+import tech.escalab.apicourse.model.dto.CourseRequest;
 import tech.escalab.apicourse.model.entity.Course;
 
 import java.util.List;
 
 public interface ICourseService {
 
-    List<Course> getCourses();
+    List<CourseRequest> getCourses();
 
     Course getCourse(int id);
 

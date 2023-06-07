@@ -1,7 +1,7 @@
 package tech.escalab.apicourse.model.repository;
 
-import org.springframework.stereotype.Component;
-
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import tech.escalab.apicourse.model.entity.Course;
 import tech.escalab.apicourse.model.entity.Institution;
 
@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Component
-public class CourseRepository {
-
+@Repository
+public interface CourseRepository extends JpaRepository<Course, Integer> {
+    /*
     public static List<Course> courses = new ArrayList<>();
 
     //for testing
@@ -60,4 +60,6 @@ public class CourseRepository {
 
         return null;
     }
+
+     */
 }
