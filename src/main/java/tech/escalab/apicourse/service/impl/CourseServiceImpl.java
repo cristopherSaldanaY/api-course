@@ -37,26 +37,20 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public Course getCourse(int id) {
-        /*Course course = courseRepository.getCourse(id);
-        return course;
+    public CourseRequest getCourse(int id) {
+        Course course = courseRepository.findById(id).get();
 
-         */
-        return null;
+        return new CourseRequest(course.getName(), course.getInstitution());
     }
 
     @Override
-    public Course insertCourse(Course course) {
-        /*
-        courseRepository.insertCourse(course);
-        course.add(linkTo(methodOn(CourseController.class).getCourse(course.getId())).withSelfRel());
-        course.add(linkTo(methodOn(CourseController.class).getCourses()).withRel(IanaLinkRelations.COLLECTION));
+    public CourseRequest insertCourse(CourseRequest courseRequest) {
+        Course course = CourseRequest.mapToEntity(courseRequest);
+        courseRepository.save(course);
 
-        return course;
-
-         */
-        return null;
+        return courseRequest;
     }
+
 
     @Override
     public Course updateCourse(int id, Course updateCourse) {

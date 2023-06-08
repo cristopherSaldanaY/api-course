@@ -58,18 +58,18 @@ public class CourseController {
 
     //Get one course
     @GetMapping("/{id}") //add the params {id}
-    public ResponseEntity<Course> getCourse(@PathVariable("id") int id){ //@PathVariable for params
-        Course course = courseService.getCourse(id);
-        if (course == null){
+    public ResponseEntity<CourseRequest> getCourse(@PathVariable("id") int id){ //@PathVariable for params
+        CourseRequest courseRequest = courseService.getCourse(id);
+        if (courseRequest == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(course,HttpStatus.OK);
+        return new ResponseEntity<>(courseRequest,HttpStatus.OK);
     }
 
     //create one course
     @PostMapping("/") //method http post
-    public ResponseEntity<Course> insertCourse (@Valid @RequestBody Course courseRequest){ //RequestBody to define structure
-        Course course = courseService.insertCourse(courseRequest);
+    public ResponseEntity<CourseRequest> insertCourse (@Valid @RequestBody CourseRequest courseRequest){ //RequestBody to define structure
+        CourseRequest course = courseService.insertCourse(courseRequest);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 

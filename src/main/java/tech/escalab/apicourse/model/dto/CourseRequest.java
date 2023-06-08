@@ -31,6 +31,14 @@ public class CourseRequest {
         return courseRequest;
     }
 
+    public static Course mapToEntity(CourseRequest courseRequest){
+        Course course = new Course();
+        course.setName(courseRequest.getName());
+        course.setInstitution(courseRequest.getInstitution());
+
+        return course;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CourseRequest{");

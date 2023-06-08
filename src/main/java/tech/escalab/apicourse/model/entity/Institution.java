@@ -27,26 +27,25 @@ public class Institution {
     @Column(nullable = false, unique = true)
     private String name;
 
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("InstitutionEntity{");
-        sb.append("id=").append(institutionId);
-        sb.append(", name='").append(name).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Institution that = (Institution) o;
-        return institutionId == that.institutionId;
+        return institutionId == that.institutionId && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(institutionId);
+        return Objects.hash(institutionId, name);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Institution{");
+        sb.append("institutionId=").append(institutionId);
+        sb.append(", name='").append(name).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

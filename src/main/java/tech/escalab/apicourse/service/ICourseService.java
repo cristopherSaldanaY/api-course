@@ -9,9 +9,9 @@ public interface ICourseService {
 
     List<CourseRequest> getCourses();
 
-    Course getCourse(int id);
+    CourseRequest getCourse(int id);
 
-    Course insertCourse(Course course);
+    CourseRequest insertCourse(CourseRequest courseRequest);
 
     Course updateCourse(int id, Course course);
 
