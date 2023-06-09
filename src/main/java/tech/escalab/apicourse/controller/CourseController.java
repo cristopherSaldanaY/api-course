@@ -6,20 +6,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.escalab.apicourse.model.dto.CourseRequest;
 import tech.escalab.apicourse.model.entity.Course;
-import tech.escalab.apicourse.model.entity.Institution;
+
 import tech.escalab.apicourse.service.impl.CourseServiceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController //it's class is a controller (entry point)
 @RequestMapping("/courses") //directions expose
@@ -76,8 +72,8 @@ public class CourseController {
 
     //update one course
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable("id") int id, @RequestBody Course courseRequest){
-        Course course = courseService.updateCourse(id, courseRequest);
+    public ResponseEntity<CourseRequest> updateCourse(@PathVariable("id") int id, @RequestBody Course courseRequest){
+        CourseRequest course = courseService.updateCourse(id, courseRequest);
 
         if(course == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -86,12 +82,36 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Course> deleteCourse(@PathVariable("id") int id){
-        Course course = courseService.deleteCourse(id);
+    public ResponseEntity<CourseRequest> deleteCourse(@PathVariable("id") int id){
+        CourseRequest course = courseService.deleteCourse(id);
 
         if (course == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/", params = {"name"})
+    public ResponseEntity<CourseRequest> getCourseByName(@RequestParam String name){
+        CourseRequest courseRequest = courseService.getCourseByName(name);
+
+        if (courseRequest == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(courseRequest, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/institution", params = {"name"})
+    public ResponseEntity<CourseRequest> getCourseByInstitution(@RequestParam String name){
+
+        CourseRequest courseRequest = courseService.getCourseByInstitution(name);
+
+        if (courseRequest == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(courseRequest, HttpStatus.OK);
+    }
 }
+

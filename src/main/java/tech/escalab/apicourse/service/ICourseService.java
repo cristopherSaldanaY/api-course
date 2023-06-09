@@ -13,7 +13,13 @@ public interface ICourseService {
 
     CourseRequest insertCourse(CourseRequest courseRequest);
 
-    Course updateCourse(int id, Course course);
+    CourseRequest updateCourse(int id, Course course);
 
-    Course deleteCourse(int id);
+    CourseRequest deleteCourse(int id);
+
+    CourseRequest getCourseByName(String name);
+
+    CourseRequest getCourseByInstitution(String name);
+
+
 }

@@ -15,6 +15,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements ICourseService {
@@ -26,7 +27,8 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public List<CourseRequest> getCourses() {
-        List<Course> courses = courseRepository.findAll();
+        /*List<Course> courses = courseRepository.findAll(); */
+        List<Course> courses = courseRepository.getAllCourses();
         List<CourseRequest> coursesDto = new ArrayList<>();
 
         for( Course course : courses){
@@ -38,10 +40,14 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public CourseRequest getCourse(int id) {
-        Course course = courseRepository.findById(id).get();
+        Optional<Course> courseOpt = courseRepository.findById(id);
 
-        return new CourseRequest(course.getName(), course.getInstitution());
+        if(!courseOpt.isEmpty()){
+            return new CourseRequest(courseOpt.get().getName(), courseOpt.get().getInstitution());
+        }
+        return null;
     }
+
 
     @Override
     public CourseRequest insertCourse(CourseRequest courseRequest) {
@@ -53,7 +59,19 @@ public class CourseServiceImpl implements ICourseService {
 
 
     @Override
-    public Course updateCourse(int id, Course updateCourse) {
+    public CourseRequest updateCourse(int id, Course updateCourse) {
+        Optional<Course> optionalCourse = courseRepository.findById(id);
+
+        if(optionalCourse.isPresent()){
+            Course course = optionalCourse.get();
+            course.setName(updateCourse.getName());
+            course.setInstitution(updateCourse.getInstitution());
+
+            Course courseSave = courseRepository.save(course);
+
+            return CourseRequest.mapToDto(courseSave);
+
+        }
         /*
         Course course = courseRepository.updateCourse(id, updateCourse);
         return course;
@@ -63,12 +81,41 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public Course deleteCourse(int id) {
-        /*
-        Course course = courseRepository.deleteCourse(id);
-        return course;
+    public CourseRequest deleteCourse(int id) {
+        Optional<Course> optionalCourse = courseRepository.findById(id);
 
-         */
+        if(optionalCourse.isPresent()){
+            Course course = optionalCourse.get();
+            courseRepository.deleteById(id);
+            CourseRequest courseRequest = CourseRequest.mapToDto(course);
+
+            return courseRequest;
+        }
+
+        return null;
+    }
+
+    @Override
+    public CourseRequest getCourseByName(String name) {
+        Course course = courseRepository.getCourseByName(name);
+
+        if (course != null){
+            CourseRequest courseRequest = CourseRequest.mapToDto(course);
+            return courseRequest;
+        }
+
+        return null;
+    }
+
+    @Override
+    public CourseRequest getCourseByInstitution(String name) {
+        Course course = courseRepository.getCourseByInstitution(name);
+
+        if (course != null){
+            CourseRequest courseRequest = CourseRequest.mapToDto(course);
+
+            return courseRequest;
+        }
         return null;
     }
 }
